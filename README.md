@@ -5,19 +5,19 @@ Under Windows, I often switch between GUI and CLI. When I want to switch to CLI 
 
 I'm used to keeping a terminal running, so with this tool, I just activate the terminal window and type a short word. Then, it changes to the directory where the topmost Explorer in.  
 ## Usage
-- Download and decompress the release package.
-- Add ExplorerDir to the PATH environment variable.
+- Download and decompress the [release package](https://github.com/Tebayaki/CDExplorer/releases/latest).
+- Add CDExplorer folder to the PATH environment variable.
 - Create a new cmd or powershell prompt, then you can use `cde` and `pushde`.
 
 It looks like:  
-```cmd
+```
 PS ~ > pushde
 PS ~\repo\CDExplorer > popd
 PS ~ > cde
 PS ~\repo\CDExplorer >
 ```
 Or you can use `ExplorerDir` to get the directory for other commands.  
-```cmd
+```
 PS ~ > gi (ExplorerDir)
 
     Directory: C:\Windows
