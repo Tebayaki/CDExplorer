@@ -9,8 +9,8 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		Release_MT|x64 = Release_MT|x64
-		Release_MT|x86 = Release_MT|x86
+		MT_Release|x64 = MT_Release|x64
+		MT_Release|x86 = MT_Release|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
@@ -19,10 +19,10 @@ Global
 		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.Debug|x64.Build.0 = Debug|x64
 		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.Debug|x86.ActiveCfg = Debug|Win32
 		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.Debug|x86.Build.0 = Debug|Win32
-		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.Release_MT|x64.ActiveCfg = Release_MT|x64
-		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.Release_MT|x64.Build.0 = Release_MT|x64
-		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.Release_MT|x86.ActiveCfg = Release_MT|Win32
-		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.Release_MT|x86.Build.0 = Release_MT|Win32
+		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.MT_Release|x64.ActiveCfg = MT_Release|x64
+		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.MT_Release|x64.Build.0 = MT_Release|x64
+		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.MT_Release|x86.ActiveCfg = MT_Release|Win32
+		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.MT_Release|x86.Build.0 = MT_Release|Win32
 		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.Release|x64.ActiveCfg = Release|x64
 		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.Release|x64.Build.0 = Release|x64
 		{766621E2-BAD3-4E8A-87A9-C1CB434A334F}.Release|x86.ActiveCfg = Release|Win32
