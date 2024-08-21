@@ -4,6 +4,7 @@
 #include <atlsafe.h>
 #include <ExDisp.h>
 #include <Shldisp.h>
+#include <shobjidl_core.h>
 
 #define FAILED_OR_NULLPTR(hr, p) (FAILED(hr) || p == nullptr)
 
@@ -14,6 +15,7 @@ int main() {
     if (topExplorerHwnd == NULL) {
         return 1;
     }
+    HWND selectedTabHwnd = FindWindowExW(topExplorerHwnd, NULL, L"ShellTabWindowClass", NULL);
 
     HRESULT hr = CoInitialize(NULL);
     CComPtr<IShellWindows> shellWindows;
@@ -37,12 +39,30 @@ int main() {
         if (FAILED_OR_NULLPTR(hr, webBrowser)) {
             continue;
         }
-        SHANDLE_PTR hwnd = NULL;
-        webBrowser->get_HWND(&hwnd);
-        if (hwnd == (SHANDLE_PTR)topExplorerHwnd) {
-            target = webBrowser;
-            break;
+        SHANDLE_PTR explorerHwnd = NULL;
+        webBrowser->get_HWND(&explorerHwnd);
+        if (explorerHwnd != (SHANDLE_PTR)topExplorerHwnd) {
+            continue;
         }
+        if (selectedTabHwnd != NULL) {
+            CComPtr<IServiceProvider> serviceProvider;
+            hr = webBrowser->QueryInterface(&serviceProvider);
+            if (FAILED_OR_NULLPTR(hr, serviceProvider)) {
+                continue;
+            }
+            CComPtr<IOleWindow> oleWindow;
+            hr = serviceProvider->QueryService(IID_IOleWindow, &oleWindow);
+            if (FAILED_OR_NULLPTR(hr, oleWindow)) {
+                continue;
+            }
+            HWND tabHwnd = NULL;
+            oleWindow->GetWindow(&tabHwnd);
+            if (tabHwnd != selectedTabHwnd) {
+                continue;
+            }
+        }
+        target = webBrowser;
+        break;
     }
     if (target == nullptr) {
         return 3;
