@@ -5,8 +5,35 @@
 #include <ExDisp.h>
 #include <Shldisp.h>
 #include <shobjidl_core.h>
+#include <string>
 
 #define FAILED_OR_NULLPTR(hr, p) (FAILED(hr) || p == nullptr)
+
+// 用于安全输出 Unicode 路径：控制台 -> WriteConsoleW；否则输出 UTF-8 bytes
+void print_path(BSTR bstr_path) {
+    if (bstr_path == nullptr) {
+        return;
+    }
+    LPCWSTR wpath = (LPCWSTR)bstr_path;
+    HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD mode;
+    if (hout != INVALID_HANDLE_VALUE && GetConsoleMode(hout, &mode)) {
+        // 直接写宽字符到控制台（适用于 Windows 原生控制台）
+        DWORD written;
+        WriteConsoleW(hout, wpath, static_cast<DWORD>(SysStringLen(bstr_path)), &written, NULL);
+        WriteConsoleW(hout, L"\n", 1, &written, NULL);
+    } else {
+        // stdout 被重定向或不是原生控制台：转换为 UTF-8 写字节流（适用于 pipes/files/Git Bash 等）
+        int required = WideCharToMultiByte(CP_UTF8, 0, wpath, static_cast<int>(SysStringLen(bstr_path)), NULL, 0, NULL, NULL);
+        if (required > 0) {
+            std::string utf8;
+            utf8.resize(required);
+            WideCharToMultiByte(CP_UTF8, 0, wpath, static_cast<int>(SysStringLen(bstr_path)), &utf8[0], required, NULL, NULL);
+            fwrite(utf8.data(), 1, utf8.size(), stdout);
+        }
+        fputc('\n', stdout);
+    }
+};
 
 int main() {
     setlocale(LC_CTYPE, "");
@@ -103,6 +130,6 @@ int main() {
         return 5;
     }
 
-    wprintf(L"%s\n", (LPWSTR)path);
+    print_path(path);
     return 0;
 }
